@@ -17,6 +17,18 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
+from locatii import views
+# from locatii.views import lista_locatie
+
 urlpatterns = [
     path('admin/', admin.site.urls),
+    #Locatii
+    path('locatii/', views.lista_locatie, name='lista_locatie'),
+    path('locatii/<int:locatie_id>/', views.detalii_locatie, name='detalii_locatie'),
+    #Tururi
+    path('tururi/', views.lista_tur, name='lista_tur'),
+    path('tururi/<int:tur_id>/', views.detalii_tur, name='detalii_tur'),
+
+    #Creare tur personalizat
+    path('tur_personalizat/creare', views.creare_tur_personalizat, name='creare_tur_personalizat'),
 ]
