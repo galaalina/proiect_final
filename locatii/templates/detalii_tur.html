@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Detalii Tur</title>
+</head>
+<body>
+    {% extends 'base.html' %}
+    {% block content %}
+    <h1>{{tur.nume}}</h1>
+    <p>{{tur.descriere}}</p>
+    <p>Durata: {{tur.durata }}</p>
+    <p>Pachet: {{ tur.pachet }}</p>
+    <p>Pret: {{ tur.pret }}</p>
+    <h2>Locatii de Interes</h2>
+
+    <ul>
+      {% for locatie in tur.locatii.all %}
+          <li>
+              <a href="{% url 'detalii_locatie' locatie.id %}" >{{ locatie.nume }}</a>
+          </li>
+      {% endfor %}
+    </ul>
+    {% endblock %}
+
+</body>
+</html>

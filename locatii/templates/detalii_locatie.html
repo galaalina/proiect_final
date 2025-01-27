@@ -2,9 +2,24 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Detalii Locatie</title>
 </head>
 <body>
-
+    {% extends 'base.html' %}
+    {% block content %}
+    <h3>{{ locatie.nume }}</h3>
+    <p>{{locatie.descriere}}</p>
+    <h2> Tururi care includ locatia:</h2>
+    <ol>
+        {% for tur in tururi %}
+        <li>
+            <a href="{% url 'detalii_tur' tur.id %}">{{tur.nume}}</a>
+        </li>
+        {% endfor %}
+    </ol>
+    <p>Localizare: {{ locatie.oras.nume }}, {{ locatie.judet.nume }}</p>
+    <p>Descriere oras:</p>
+    <p>{{locatie.oras.descriere}}</p>
+    {% endblock %}
 </body>
 </html>

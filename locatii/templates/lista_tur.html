@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tururi</title>
+
+</head>
+<body>
+    {% extends 'base.html' %}
+    {% block content %}
+    <h1>Tururi disponibile</h1>
+    <ul>
+        {% for tur in tururi %}
+            <li>
+                <a href="{% url 'detalii_tur' tur.id %}">{{tur.nume}}</a>
+            </li>
+        {% endfor %}
+    </ul>
+    {% endblock %}
+</body>
+</html>
