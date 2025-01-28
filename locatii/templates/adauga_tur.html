@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Adauga Tur</title>
+</head>
+<body>
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h3 class="mb-4"><i>Adaugă un nou tur</i></h3>
+
+    <!-- Afișează erorile globale ale formularului -->
+    {% if form.errors %}
+        <div class="alert alert-danger">
+            <strong>A apărut o eroare!</strong>
+            <ul>
+                {% for field in form %}
+                    {% for error in field.errors %}
+                        <li><strong>{{ field.label }}:</strong> {{ error }}</li>
+                    {% endfor %}
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+
+    <form method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
+        {% csrf_token %}
+
+        {% for field in form %}
+            <div class="form-group">
+                <label for="{{ field.id_for_label }}" style="font-style: italic;">
+                    {{ field.label }}
+                </label>
+
+                <!-- Afișează câmpul formularului -->
+                {{ field }}
+
+                <!-- Afișează erorile pentru fiecare câmp în parte -->
+                {% if field.errors %}
+                    <div class="text-danger">
+                        {% for error in field.errors %}
+                            <small>{{ error }}</small><br>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
+                <!-- Afișează textul de ajutor pentru câmp (dacă există) -->
+                {% if field.help_text %}
+                    <small class="form-text text-muted">{{ field.help_text }}</small>
+                {% endif %}
+            </div>
+        {% endfor %}
+
+        <button type="submit" class="btn btn-primary">Salvează</button>
+        <a href="{% url 'lista_tur' %}" class="btn btn-secondary ml-2">Anulează</a>
+    </form>
+</div>
+{% endblock %}
+
+</body>
+</html>

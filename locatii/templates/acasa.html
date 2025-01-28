@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Acasa</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
+  <style>
+    /* Stilizare pentru carduri cu dimensiuni identice */
+    .card {
+      height: 100%; /* Cardurile vor avea aceeași înălțime */
+      display: flex;
+      flex-direction: column;
+    }
+    .card-body {
+      flex: 1; /* Umple spațiul disponibil în card */
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between; /* Aliniază elementele vertical */
+    }
+    .card-img-top {
+      height: 200px;
+      object-fit: cover; /* Menține imaginea în limitele div-ului */
+    }
+  </style>
+</head>
+<body>
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-5">
+  <h2 class="text-center mb-4"><i>Bine ai venit pe GalaTour!</i></h2>
+    <p class="text-center mb-4">Aici gasesti informații despre locații și tururile noastre.</p>
+
+    <div class="container mt-5">
+      <h3 class="mb-4 text-center"><i>Locații </i></h3>
+    <div class="row">
+      {% for locatie in locatii %}
+      <div class="col-md-4 mb-4 d-flex">
+        <div class="card shadow-sm w-100">
+          {% if locatie.imagine_locatie %}
+          <img class="card-img-top" src="{{ locatie.imagine_locatie.url }}" alt="{{ locatie.nume }}">
+          {% endif %}
+          <div class="card-body">
+              <h5 class="card-title"><i>{{ locatie.nume }}</i></h5>
+            <p class="card-text">{{ locatie.descriere|truncatewords:30 }}</p>
+            <p class="text-muted">
+              Localizare: {{ locatie.oras.nume }}, {{ locatie.oras.judet.nume }}
+            </p>
+              <a href="{% url 'detalii_locatie' locatie.id %}" class="btn btn-info btn-sm mt-3"><i>Vezi detalii</i></a>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+
+    <!-- Buton pentru a vizualiza toate locațiile -->
+    <div class="text-center">
+      <a href="{% url 'lista_locatie' %}" class="btn btn-info mt-4"><i>Vezi toate locațiile</i></a>
+    </div>
+
+    <div class="container mt-5">
+      <h3 class="mb-4 text-center"><i>Tururi Disponibile</i></h3>
+    <div class="row">
+      {% for tur in tururi %}
+      <div class="col-md-4 mb-4 d-flex">
+        <div class="card shadow-sm w-100">
+          {% if tur.imagine_tur %}
+          <img class="card-img-top" src="{{ tur.imagine_tur.url }}" alt="{{ tur.nume }}">
+          {% endif %}
+          <div class="card-body">
+              <h5 class="card-title"><i>{{ tur.nume }}</i></h5>
+            <p class="card-text">{{ tur.descriere|truncatewords:30 }}</p>
+            <a href="{% url 'detalii_tur' tur.id %}" class="btn btn-info btn-sm mt-3"><i>Vezi detalii</i></a>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+
+    <!-- Buton pentru a vizualiza toate tururile -->
+    <div class="text-center">
+      <a href="{% url 'lista_tur' %}" class="btn btn-info mt-4"><i>Vezi toate tururile</i></a>
+    </div>
+
+</div>
+{% endblock %}
+
+
+
+</body>
+</html>

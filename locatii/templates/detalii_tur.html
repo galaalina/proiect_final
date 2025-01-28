@@ -7,12 +7,12 @@
 <body>
     {% extends 'base.html' %}
     {% block content %}
-    <h1>{{tur.nume}}</h1>
+    <h3>{{tur.nume}}</h3>
     <p>{{tur.descriere}}</p>
     <p>Durata: {{tur.durata }}</p>
     <p>Pachet: {{ tur.pachet }}</p>
     <p>Pret: {{ tur.pret }}</p>
-    <h2>Locatii de Interes</h2>
+    <h3>Locatii de Interes</h3>
 
     <ul>
       {% for locatie in tur.locatii.all %}

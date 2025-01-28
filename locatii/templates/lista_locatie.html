@@ -1,35 +1,59 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Locatii</title>
-
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
+  <style>
+    /* Stilizare pentru carduri cu dimensiuni identice */
+    .card {
+      height: 100%; /* Cardurile vor avea aceeași înălțime */
+      display: flex;
+      flex-direction: column;
+    }
+    .card-body {
+      flex: 1; /* Umple spațiul disponibil în card */
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between; /* Aliniază elementele vertical */
+    }
+    .card-img-top {
+      height: 200px;
+      object-fit: cover; /* Menține imaginea în limitele div-ului */
+    }
+  </style>
 </head>
 <body>
-    {% extends 'base.html' %}
-    {% block content %}
-    <h1>Locatii de Interes</h1>
-
-    <ol>
-        {% for locatie in locatii %}
-            <li>
-                <a href="{% url 'detalii_locatie' locatie.id %}" >
-                    <p>{{ locatie.nume }}</p>
-                </a>
-                <p>{{ locatie.descriere}}</p>
-                <p>Localizare: {{ locatie.oras.nume }}, {{ locatie.oras.judet.nume }}</p>
-                 {% if locatie.imagine_locatie %}
-                    <img src="{{ locatie.imagine_locatie.url }}" alt="{{ locatie.nume }}" style="max-width: 200px; height: auto;">
-                {% else %}
-                    <p><em>Nu există imagine disponibilă</em></p>
-                {% endif %}
-            </li>
-            <br>
-        {% endfor %}
-    </ol>
-    {% endblock %}
+  {% extends 'base.html' %}
+  {% block content %}
+  <div class="container mt-5">
+      <h3 class="mb-4 text-center"><i>Locații de Interes</i></h3>
+    <div class="row">
+      {% for locatie in locatii %}
+      <div class="col-md-4 mb-4 d-flex">
+        <div class="card shadow-sm w-100">
+          {% if locatie.imagine_locatie %}
+          <img class="card-img-top" src="{{ locatie.imagine_locatie.url }}" alt="{{ locatie.nume }}">
+          {% endif %}
+          <div class="card-body">
+              <h5 class="card-title"><i>{{ locatie.nume }}</i></h5>
+            <p class="card-text">{{ locatie.descriere|truncatewords:30 }}</p>
+            <p class="text-muted">
+              Localizare: {{ locatie.oras.nume }}, {{ locatie.oras.judet.nume }}
+            </p>
+              <a href="{% url 'detalii_locatie' locatie.id %}" class="btn btn-info btn-sm mt-3"><i>Vezi detalii</i></a>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+  {% endblock %}
+  <!-- Bootstrap JS + Popper.js -->
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
 </body>
 </html>
-
-

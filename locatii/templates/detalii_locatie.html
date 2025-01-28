@@ -7,9 +7,9 @@
 <body>
     {% extends 'base.html' %}
     {% block content %}
-    <h3>{{ locatie.nume }}</h3>
+    <h3><i>{{ locatie.nume }}</i></h3>
     <p>{{locatie.descriere}}</p>
-    <h2> Tururi care includ locatia:</h2>
+    <h4><i> Tururi care includ locatia:</i></h4>
     <ol>
         {% for tur in tururi %}
         <li>

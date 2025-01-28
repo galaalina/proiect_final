@@ -25,12 +25,15 @@ from locatii import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', views.acasa, name='acasa'),
     #Locatii
     path('locatii/', views.lista_locatie, name='lista_locatie'),
     path('locatii/<int:locatie_id>/', views.detalii_locatie, name='detalii_locatie'),
+    path('adauga_locatie/', views.adauga_locatie, name='adauga_locatie'),
     #Tururi
     path('tururi/', views.lista_tur, name='lista_tur'),
     path('tururi/<int:tur_id>/', views.detalii_tur, name='detalii_tur'),
+    path('adauga_tur/', views.adauga_tur, name='adauga_tur'),
 
     #Creare tur personalizat
     path('tur_personalizat/creare', views.creare_tur_personalizat, name='creare_tur_personalizat'),
