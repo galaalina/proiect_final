@@ -54,8 +54,7 @@
             <a class="navbar-brand" href="/"><i><b>GalaTour</b></i></a>
             <button
                 class="navbar-toggler" type="button"
-                data-toggle="collapse" data-target="#navbarNavAltMarkup"
-            >
+                data-toggle="collapse" data-target="#navbarNavAltMarkup">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
@@ -76,6 +75,30 @@
                         <i>Adauga Tur</i>
                     </a>
                 </div>
+            </div>
+            <div class="nav-item dropdown">
+<!--            # user este o variabila introdusa de Django in toate teplaturile-->
+            {% if user.is_authenticated %}
+            <a class="nav-link dropdown-toggle text-white" href="#" data-toggle="dropdown">
+
+                {{user.username}}
+            </a>
+             <div class="dropdown-menu dropdown-menu-right">
+                <a class="dropdown-item text-right" href=" {% url 'conturi:logout' %}"> Logout </a>
+                 <a class="dropdown-item text-right" href=" {% url 'conturi:profile_update' %}">Editeaza Profilul</a>
+
+            </div>
+            {% else %}
+             <a class="nav-link dropdown-toggle text-white" href="#" data-toggle="dropdown">
+                Nu esti autentificat!
+            </a>
+            <div class="dropdown-menu dropdown-menu-right">
+                <a class="dropdown-item text-right" href=" {% url 'conturi:login' %}"> Login </a>
+                <a class="dropdown-item text-right" href=" {% url 'conturi:register' %}">Inregistrare</a>
+
+            </div>
+            {% endif %}
+
             </div>
         </div>
     </nav>

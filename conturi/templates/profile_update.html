@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Editeaza Profilul</title>
+</head>
+<body>
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+    <h2>Editează Profilul</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Salvează modificările</button>
+    </form>
+</div>
+{% endblock %}
+</body>
+</html>
