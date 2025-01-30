@@ -3,16 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <title>Inregistrare</title>
+    <style>
+        label {
+            font-style: italic;
+        }
+    </style>
 </head>
 <body>
 {% extends 'base.html' %}
 {% block content %}
 <div class="container">
-    <h2>Înregistrare</h2>
+    <h2><i>Înregistrare</i></h2>
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit" class="btn btn-primary">Înregistrare</button>
+        <button type="submit" class="btn btn-primary"><i>Înregistrare</i></button>
     </form>
 </div>
 {% endblock %}

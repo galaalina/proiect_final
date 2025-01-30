@@ -4,7 +4,7 @@ from django.shortcuts import render
 from django.contrib.auth.views import LoginView, LogoutView
 from django.urls import reverse_lazy
 from django.views.generic.edit import CreateView, UpdateView
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 from django.shortcuts import redirect
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .forms import UserRegisterForm, ProfileForm
@@ -16,9 +16,17 @@ class UserRegisterView(CreateView):
     success_url = reverse_lazy('acasa')
 
     def form_valid(self, form):
-        response = super().form_valid(form)
-        Profile.objects.create(user=self.object)
-        return response
+        # Salvează utilizatorul fără a-l confirma imediat
+        user = form.save(commit=False)
+        user.save()  # Salvează utilizatorul efectiv în baza de date
+
+
+        clienti_group, created = Group.objects.get_or_create(name="clienti")
+        user.groups.add(clienti_group)
+
+        return super().form_valid(form)
+
+
 
 class UserLoginView(LoginView):
     template_name = 'login.html'

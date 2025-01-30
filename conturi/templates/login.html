@@ -3,16 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <title>Login</title>
+    <style>
+        label {
+            font-style: italic;
+        }
+    </style>
 </head>
 <body>
 {% extends 'base.html' %}
 {% block content %}
 <div class="container">
-    <h2>Login</h2>
+    <h2><i>Login</i></h2>
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit" class="btn btn-primary">Login</button>
+        <button type="submit" class="btn btn-primary"><i>Login</i></button>
     </form>
 </div>
 {% endblock %}

@@ -81,20 +81,20 @@
             {% if user.is_authenticated %}
             <a class="nav-link dropdown-toggle text-white" href="#" data-toggle="dropdown">
 
-                {{user.username}}
+                <i>{{user.username}}</i>
             </a>
              <div class="dropdown-menu dropdown-menu-right">
-                <a class="dropdown-item text-right" href=" {% url 'conturi:logout' %}"> Logout </a>
-                 <a class="dropdown-item text-right" href=" {% url 'conturi:profile_update' %}">Editeaza Profilul</a>
+                 <a class="dropdown-item text-right" href=" {% url 'conturi:logout' %}"><i>Logout</i></a>
+                 <a class="dropdown-item text-right" href=" {% url 'conturi:profile_update' %}"><i>Editeaza Profilul</i></a>
 
             </div>
             {% else %}
              <a class="nav-link dropdown-toggle text-white" href="#" data-toggle="dropdown">
-                Nu esti autentificat!
+                 <i>Nu esti autentificat!</i>
             </a>
             <div class="dropdown-menu dropdown-menu-right">
-                <a class="dropdown-item text-right" href=" {% url 'conturi:login' %}"> Login </a>
-                <a class="dropdown-item text-right" href=" {% url 'conturi:register' %}">Inregistrare</a>
+                <a class="dropdown-item text-right" href=" {% url 'conturi:login' %}"><i>Login</i></a>
+                <a class="dropdown-item text-right" href=" {% url 'conturi:register' %}"><i>Inregistrare</i></a>
 
             </div>
             {% endif %}
