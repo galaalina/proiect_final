@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Rezervare</title>
+</head>
+<body>
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>Rezervă un tur</h2>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Rezervă</button>
+  </form>
+  <a href="{% url 'lista_rezervari' %}">Vezi rezervările mele</a>
+{% endblock %}
+
+</body>
+</html>

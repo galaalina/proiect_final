@@ -20,6 +20,12 @@ class UserRegisterForm(UserCreationForm):
             'last_name': 'Nume',
             'email': 'Adresă email',
         }
+        widgets = {
+            'username': TextInput(attrs={'class': 'form-control'}),
+            'first_name': TextInput(attrs={'class': 'form-control'}),
+            'last_name': TextInput(attrs={'class': 'form-control'}),
+            'email': EmailInput(attrs={'class': 'form-control'}),
+        }
 
     @atomic
     def save(self, commit=True):
@@ -35,13 +41,7 @@ class UserRegisterForm(UserCreationForm):
         return user
 
 
-    # def save(self, commit=True):
-    #     user = super().save(commit=False)
-    #     user.last_name = self.cleaned_data['nume']
-    #     user.first_name = self.cleaned_data['prenume']
-    #     if commit:
-    #         user.save()
-    #     return user
+
 
 class ProfileForm(ModelForm):
     telefon = CharField(required=True, widget=TextInput(attrs={'class': 'form-control'}))

@@ -1,5 +1,7 @@
+from django.contrib.auth.models import User
 from django.db import models
 from django.db.models import *
+from django.core.validators import MaxValueValidator, MinValueValidator
 
 # Create your models here.
 
@@ -80,3 +82,11 @@ class Tur(models.Model):
     def __str__(self):
         return f"{self.nume}"
 
+class Rezervare(models.Model):
+    class Meta:
+        verbose_name_plural = 'Rezervari'
+    utilizator = ForeignKey(User, on_delete=CASCADE, related_name='rezervare')
+    numar_persoane= PositiveIntegerField(blank=False, null=False, default=1, validators=[MinValueValidator(1), MaxValueValidator(10)])
+    tur = ForeignKey(Tur, on_delete=CASCADE, related_name='rezervare')
+    data_inceput = DateField()
+    creata = DateField(auto_now_add=True)

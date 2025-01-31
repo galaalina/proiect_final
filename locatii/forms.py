@@ -1,6 +1,6 @@
 from django.forms import *
 
-from locatii.models import Locatie, Tur
+from locatii.models import Locatie, Tur, Rezervare
 
 
 class LocatieForm(ModelForm):
@@ -30,4 +30,16 @@ class TurForm(ModelForm):
             'pret': TextInput(attrs={'class': 'form-control', 'placeholder': 'Prețul turului'}),
             'pachet': Textarea(attrs={'class': 'form-control', 'rows': 4, 'placeholder': 'Detalii pachet...'}),
             'imagine_tur': ClearableFileInput(attrs={'class': 'form-control'}),
+        }
+
+
+class RezervareForm(ModelForm):
+    class Meta:
+        model = Rezervare
+        fields = ['numar_persoane', 'tur', 'data_inceput']
+        widgets = {
+            'numar_persoane':NumberInput(attrs={'class': 'form-control', 'min': 1, 'max': 10}),
+            'tur': Select(attrs={'class': 'form-control'}),
+            'data_inceput': DateInput(attrs={'type': 'date', 'class': 'form-control'}),
+
         }

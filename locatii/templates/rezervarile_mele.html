@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Rezervarile Mele</title>
+</head>
+<body>
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>Rezervările mele</h2>
+  {% if rezervari %}
+    <ul>
+      {% for rezervare in rezervari %}
+        <li>
+          <strong>Tur:</strong> {{ rezervare.tur.nume }}<br>
+          <strong>Data:</strong> {{ rezervare.data_inceput }}<br>
+          <strong>Număr persoane:</strong> {{ rezervare.numar_persoane }}<br>
+          <a href="{% url 'anuleaza_rezervare' rezervare.id %}">Anulează</a>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>Nu ai nicio rezervare.</p>
+  {% endif %}
+{% endblock %}
+
+
+</body>
+</html>

@@ -1,6 +1,10 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import *
-from .models import Locatie, Tur, Judet, Oras
-from .forms import LocatieForm, TurForm
+from .models import *
+from .forms import LocatieForm, TurForm, RezervareForm
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic import CreateView, ListView
+from django.urls import reverse_lazy
 
 # Create your views here.
 
@@ -47,10 +51,6 @@ def lista_tur(request):
     tururi = Tur.objects.filter(type='predefinit')
     return render(request, 'lista_tur.html', {'tururi': tururi})
 
-
-
-
-
 def adauga_tur(request):
     if request.method == 'POST':
         form = TurForm(request.POST, request.FILES)
@@ -69,19 +69,36 @@ def detalii_tur(request, tur_id):
     locatii = tur.locatii.all()
     return render(request, 'detalii_tur.html', {'tur': tur, 'locatii': locatii})
 
-def creare_tur_personalizat(request):
-    locatii = Locatie.objects.all()
-    if request.method == 'POST':
-        ids_locatie_selectata = request.POST.getlist('locatii')
-        locatii_selectate = Locatie.objects.filter(id__in=ids_locatie_selectata)
-        tur_personalizat = Tur.objects.create(
-            nume='Tur Personalizat',
-            descriere="Un tur definit de client",
-            type='personalizat'
-        )
-        tur_personalizat.locatii.set(locatii_selectate)
-        return render(request, 'succes_tur_personalizat.html', {'tur': tur_personalizat})
-    return render(request, 'creare_tur_personalizat.html', {'locatii': locatii})
+
+# Creare rezervare
+class RezervareCreateView(LoginRequiredMixin, CreateView):
+    model = Rezervare
+    form_class = RezervareForm
+    template_name = 'rezervare_form.html'
+    success_url = reverse_lazy('lista_rezervari')
+
+    def form_valid(self, form):
+        form.instance.utilizator = self.request.user
+        return super().form_valid(form)
+
+# Afișare rezervările utilizatorului
+class RezervarileMeleView(LoginRequiredMixin, ListView):
+    model = Rezervare
+    template_name = 'rezervarile_mele.html'
+    context_object_name = 'rezervari'
+
+    def get_queryset(self):
+        return Rezervare.objects.filter(utilizator=self.request.user)
+
+# Anularea unei rezervări
+@login_required
+def anuleaza_rezervare(request, pk):
+    rezervare = get_object_or_404(Rezervare, pk=pk, utilizator=request.user)
+    rezervare.delete()
+    return redirect('lista_rezervari')
+
+
+
 
 
 
