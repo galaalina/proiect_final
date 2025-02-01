@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Contact</title>
+</head>
+<body>
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h3><i>Contact</i></h3>
+    <p>Ne poți găsi la următoarea locație:</p>
+
+    <!-- OpenStreetMap -->
+    <div id="map" style="height: 400px; width: 100%;"></div>
+
+    <script>
+        function initMap() {
+            var locatie = [44.4268, 26.1025]; // Coordonatele locației (înlocuiește cu adresa ta)
+
+            // Inițializează harta
+            var map = L.map('map').setView(locatie, 15);
+
+            // Adaugă tiles de la OpenStreetMap
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            }).addTo(map);
+
+            // Adaugă un marker la locație
+            L.marker(locatie).addTo(map)
+                .bindPopup("Locația noastră")
+                .openPopup();
+        }
+
+        document.addEventListener("DOMContentLoaded", initMap);
+    </script>
+
+    <!-- Include Leaflet.js -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
+    <br>
+    <h4><i>Detalii contact</i>:</h4>
+    <br>
+    <p><strong>Adresă:</strong> Strada Exemplu 10, București</p>
+    <p><strong>Telefon:</strong> +40 123 456 789</p>
+    <p><strong>Email:</strong> galatourt@gmail.com</p>
+</div>
+{% endblock %}
+
+</body>
+</html>

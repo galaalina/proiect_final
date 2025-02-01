@@ -8,13 +8,14 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h2><i>Rezervările mele</i></h2>
+<h3><i>Rezervările mele</i></h3>
   {% if rezervari %}
     <ul>
       {% for rezervare in rezervari %}
         <li>
           <strong><i>Tur:</i></strong> {{ rezervare.tur.nume }}<br>
           <strong><i>Data:</i></strong> {{ rezervare.data_inceput }}<br>
+          <strong><i>Data rezervare:</i></strong> {{ rezervare.creata}}<br>
           <strong><i>Număr persoane:</i></strong> {{ rezervare.numar_persoane }}<br>
           <a href="{% url 'anuleaza_rezervare' rezervare.id  %}" class="btn btn-info btn-sm mt-3"><i>Anuleaza</i></a>
           <br>

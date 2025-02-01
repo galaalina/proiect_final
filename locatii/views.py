@@ -160,6 +160,12 @@ def anuleaza_rezervare(request, pk):
 
 
 
+def contact(request):
+    return render(request, 'contact.html')
+
+
+
+
 
 
 

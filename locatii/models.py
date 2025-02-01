@@ -85,11 +85,11 @@ class Tur(models.Model):
 class Rezervare(models.Model):
     class Meta:
         verbose_name_plural = 'Rezervari'
-    utilizator = ForeignKey(User, on_delete=CASCADE, related_name='rezervare')
+    utilizator = ForeignKey(User, on_delete=CASCADE, related_name='rezervari')
     numar_persoane= PositiveIntegerField(blank=False, null=False, default=1, validators=[MinValueValidator(1), MaxValueValidator(10)])
-    tur = ForeignKey(Tur, on_delete=CASCADE, related_name='rezervare')
+    tur = ForeignKey(Tur, on_delete=CASCADE, related_name='rezervari')
     data_inceput = DateField()
     creata = DateField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.numar_persoane, self.utilizator}"
+        return f"numar persoane {self.numar_persoane}, nume client {self.utilizator}"
