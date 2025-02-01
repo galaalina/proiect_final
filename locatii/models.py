@@ -90,3 +90,6 @@ class Rezervare(models.Model):
     tur = ForeignKey(Tur, on_delete=CASCADE, related_name='rezervare')
     data_inceput = DateField()
     creata = DateField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.numar_persoane, self.utilizator}"

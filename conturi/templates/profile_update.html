@@ -3,16 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <title>Editeaza Profilul</title>
+    <style>
+        label {
+            font-style: italic;
+        }
+    </style>
 </head>
 <body>
 {% extends 'base.html' %}
 {% block content %}
 <div class="container">
-    <h2>Editează Profilul</h2>
+    <h2><i>Editează Profilul</i></h2>
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit" class="btn btn-primary">Salvează modificările</button>
+        <button type="submit" class="btn btn-primary"><i>Salvează modificările</i></button>
     </form>
 </div>
 {% endblock %}

@@ -20,7 +20,18 @@
               <a href="{% url 'detalii_locatie' locatie.id %}" >{{ locatie.nume }}</a>
           </li>
       {% endfor %}
+
     </ul>
+    {% if user.is_authenticated and user.groups.all.0.name == "angajati" %}
+    <a href="{% url 'editeaza_tur' tur.id %}" class="btn btn-warning">Editează</a>
+
+    <form method="post" action="{% url 'sterge_tur' tur.id %}" style="display:inline;">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger" onclick="return confirm('Sigur vrei să ștergi acest tur?');">
+            Șterge
+        </button>
+    </form>
+    {% endif %}
     {% endblock %}
 
 </body>

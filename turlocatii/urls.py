@@ -22,7 +22,8 @@ from django.conf.urls.static import static
 from conturi import urls as conturi_urls
 
 from locatii import views
-from locatii.views import RezervareCreateView, RezervarileMeleView, anuleaza_rezervare
+from locatii.views import RezervareCreateView, RezervarileMeleView, anuleaza_rezervare, editeaza_tur, sterge_tur, \
+    sterge_locatie, editeaza_locatie
 
 # from locatii.views import lista_locatie, detalii_locatie, lista_tur, detalii_tur
 
@@ -34,10 +35,14 @@ urlpatterns = [
     path('locatii/', views.lista_locatie, name='lista_locatie'),
     path('locatii/<int:locatie_id>/', views.detalii_locatie, name='detalii_locatie'),
     path('adauga_locatie/', views.adauga_locatie, name='adauga_locatie'),
+    path('locatie/<int:locatie_id>/edit/', editeaza_locatie, name='editeaza_locatie'),
+    path('locatie/<int:locatie_id>/delete/', sterge_locatie, name='sterge_locatie'),
     #Tururi
     path('tururi/', views.lista_tur, name='lista_tur'),
     path('tururi/<int:tur_id>/', views.detalii_tur, name='detalii_tur'),
     path('adauga_tur/', views.adauga_tur, name='adauga_tur'),
+    path('tur/<int:tur_id>/edit/', editeaza_tur, name='editeaza_tur'),
+    path('tur/<int:tur_id>/delete/', sterge_tur, name='sterge_tur'),
     # conturi
     path("conturi/", include(conturi_urls, namespace='conturi')),
     # rezervari

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Confirma stergerea</title>
+</head>
+<body>
+{% extends 'base.html' %}
+
+{% block content %}
+    <h3>Sigur vrei să ștergi acest tur?</h3>
+    <p><strong>{{ tur.nume }}</strong></p>
+
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Da, șterge</button>
+        <a href="{% url 'detalii_tur' tur.id %}" class="btn btn-secondary">Anulează</a>
+    </form>
+{% endblock %}
+
+</body>
+</html>

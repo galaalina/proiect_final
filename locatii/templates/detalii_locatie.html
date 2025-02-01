@@ -20,6 +20,16 @@
     <p>Localizare: {{ locatie.oras.nume }}, {{ locatie.judet.nume }}</p>
     <p>Descriere oras:</p>
     <p>{{locatie.oras.descriere}}</p>
+    {% if user.is_authenticated and user.groups.all.0.name == "angajati" %}
+    <a href="{% url 'editeaza_locatie' locatie.id %}" class="btn btn-warning">Editează</a>
+
+    <form method="post" action="{% url 'sterge_locatie' locatie.id %}" style="display:inline;">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger" onclick="return confirm('Sigur vrei să ștergi acesta locatie?');">
+            Șterge
+        </button>
+    </form>
+    {% endif %}
     {% endblock %}
 </body>
 </html>

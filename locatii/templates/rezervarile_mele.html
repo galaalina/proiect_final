@@ -8,15 +8,17 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <h2>Rezervările mele</h2>
+<h2><i>Rezervările mele</i></h2>
   {% if rezervari %}
     <ul>
       {% for rezervare in rezervari %}
         <li>
-          <strong>Tur:</strong> {{ rezervare.tur.nume }}<br>
-          <strong>Data:</strong> {{ rezervare.data_inceput }}<br>
-          <strong>Număr persoane:</strong> {{ rezervare.numar_persoane }}<br>
-          <a href="{% url 'anuleaza_rezervare' rezervare.id %}">Anulează</a>
+          <strong><i>Tur:</i></strong> {{ rezervare.tur.nume }}<br>
+          <strong><i>Data:</i></strong> {{ rezervare.data_inceput }}<br>
+          <strong><i>Număr persoane:</i></strong> {{ rezervare.numar_persoane }}<br>
+          <a href="{% url 'anuleaza_rezervare' rezervare.id  %}" class="btn btn-info btn-sm mt-3"><i>Anuleaza</i></a>
+          <br>
+          <br>
         </li>
       {% endfor %}
     </ul>
