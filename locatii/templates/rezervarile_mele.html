@@ -14,8 +14,8 @@
       {% for rezervare in rezervari %}
         <li>
           <strong><i>Tur:</i></strong> {{ rezervare.tur.nume }}<br>
-          <strong><i>Data:</i></strong> {{ rezervare.data_inceput }}<br>
-          <strong><i>Data rezervare:</i></strong> {{ rezervare.creata}}<br>
+          <strong><i>Data rezervare:</i></strong> {{ rezervare.data_inceput }}<br>
+          <strong><i>Creata:</i></strong> {{ rezervare.creata}}<br>
           <strong><i>Număr persoane:</i></strong> {{ rezervare.numar_persoane }}<br>
           <a href="{% url 'anuleaza_rezervare' rezervare.id  %}" class="btn btn-info btn-sm mt-3"><i>Anuleaza</i></a>
           <br>
@@ -23,6 +23,9 @@
         </li>
       {% endfor %}
     </ul>
+<p><i> Vei fi contactat pentru confirmare in maxim 2 ore de la plasarea rezervarii. Ulterior vei putea efectua plata
+  in contul indicat sau la <a href="{% url 'contact' %}">sediul nostru</a>.</i></p>
+
   {% else %}
     <p>Nu ai nicio rezervare.</p>
   {% endif %}

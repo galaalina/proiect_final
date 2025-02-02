@@ -92,4 +92,4 @@ class Rezervare(models.Model):
     creata = DateField(auto_now_add=True)
 
     def __str__(self):
-        return f"numar persoane {self.numar_persoane}, nume client {self.utilizator}"
+        return f"{self.tur}, {self.utilizator}"
