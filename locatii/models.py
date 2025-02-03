@@ -36,33 +36,6 @@ class Locatie(models.Model):
         return f"{self.nume}"
 
 
-class Transport(models.Model):
-    class Meta:
-        verbose_name_plural = 'Mijloace de transport'
-    TIP_TRANSPORT = [
-        ('autocar', 'Autocar'  ),
-        ('masina', 'Masina' ),
-        ('bicicleta', 'Bicicleta' ),
-        ('mers','Mers pe jos'),
-        ('tren', 'Tren ')
-
-    ]
-    nume = CharField(max_length=60, choices=TIP_TRANSPORT)
-    descriere = TextField(blank=True, null=True)
-    def __str__(self):
-        return self.nume
-
-class Ghid(models.Model):
-    class Meta:
-        verbose_name_plural = 'Ghizi'
-    nume = CharField(max_length=128)
-    limbi = CharField(max_length=256, default='romana, engleza')
-    telefon= CharField(max_length=128, blank=True, null=True)
-
-    def __str__(self):
-        return self.nume
-
-
 class Tur(models.Model):
     class Meta:
         verbose_name_plural = 'Tururi'
