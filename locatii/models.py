@@ -85,11 +85,18 @@ class Tur(models.Model):
 class Rezervare(models.Model):
     class Meta:
         verbose_name_plural = 'Rezervari'
+
+    OPTIUNI_STATUS = [
+        ('in asteptare', 'In asteptare'),
+        ('in procesare', 'In procesare'),
+        ('confirmata', 'Confirmata')
+    ]
     utilizator = ForeignKey(User, on_delete=CASCADE, related_name='rezervari')
     numar_persoane= PositiveIntegerField(blank=False, null=False, default=1, validators=[MinValueValidator(1), MaxValueValidator(10)])
     tur = ForeignKey(Tur, on_delete=CASCADE, related_name='rezervari')
     data_inceput = DateField()
     creata = DateField(auto_now_add=True)
+    status = CharField(max_length=40, choices=OPTIUNI_STATUS, default='in asteptare' )
 
     def __str__(self):
         return f"{self.tur}, {self.utilizator}"
