@@ -18,8 +18,13 @@
           <strong><i>Creata:</i></strong> {{ rezervare.creata}}<br>
           <strong><i>Număr persoane:</i></strong> {{ rezervare.numar_persoane }}<br>
           <strong><i>Status:</i></strong> {{ rezervare.status }}<br>
+            <strong><i>Suma de plata:</i></strong> {{ rezervare.suma }} lei<br>
+          <a href="{% url 'anuleaza_rezervare' rezervare.id %}"
+            class="btn btn-info btn-sm mt-3"
+            onclick="return confirm('Ești sigur că vrei să anulezi această rezervare?');">
+          <i>Anulează</i>
+          </a>
 
-          <a href="{% url 'anuleaza_rezervare' rezervare.id  %}" class="btn btn-info btn-sm mt-3"><i>Anuleaza</i></a>
           <br>
           <br>
         </li>

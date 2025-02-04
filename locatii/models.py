@@ -48,7 +48,7 @@ class Tur(models.Model):
     locatii = ManyToManyField(Locatie, related_name='tururi')
     type = CharField(max_length=40, choices=OPTIUNI_TIP_TUR, default='predefinit' )
     durata= CharField(max_length=128, blank=True, null=True)
-    pret = CharField(max_length=256, blank=True, null=True)
+    pret = PositiveIntegerField(blank=False, null=False, default=1)
     pachet = TextField(blank=True, null=True)
     imagine_tur = ImageField(upload_to='imagini', blank=True, null=True)
 
@@ -70,6 +70,9 @@ class Rezervare(models.Model):
     data_inceput = DateField()
     creata = DateField(auto_now_add=True)
     status = CharField(max_length=40, choices=OPTIUNI_STATUS, default='in asteptare' )
+    suma = PositiveIntegerField(blank=False, null=False, default=1)
 
     def __str__(self):
         return f"{self.tur}, {self.utilizator}"
+
+

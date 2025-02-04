@@ -46,12 +46,15 @@ urlpatterns = [
     path('adauga_tur/', views.adauga_tur, name='adauga_tur'),
     path('tur/<int:tur_id>/edit/', editeaza_tur, name='editeaza_tur'),
     path('tur/<int:tur_id>/delete/', sterge_tur, name='sterge_tur'),
-    # conturi
+
+
+        # conturi
     path("conturi/", include(conturi_urls, namespace='conturi')),
     # rezervari
     path('rezervare/', RezervareCreateView.as_view(), name='creeaza_rezervare'),
     path('rezervarile-mele/', RezervarileMeleView.as_view(), name='lista_rezervari'),
     path('rezervare/anuleaza/<int:pk>/', anuleaza_rezervare, name='anuleaza_rezervare'),
+    #
 
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 if settings.DEBUG:

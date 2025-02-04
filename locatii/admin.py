@@ -9,10 +9,11 @@ admin.site.register(Oras)
 
 
 
+
 @admin.register(Rezervare)
 class RezervareAdmin(admin.ModelAdmin):
-    list_display = ('utilizator', 'tur', 'numar_persoane', 'creata', 'data_inceput', 'status','edit_button', 'delete_button')
-    list_filter = ('utilizator', 'tur','data_inceput', 'status')
+    list_display = ('utilizator', 'tur', 'numar_persoane', 'suma','creata', 'data_inceput', 'status','edit_button', 'delete_button')
+    list_filter = ('utilizator', 'tur','suma','data_inceput', 'status')
     ordering = ('data_inceput','status')
 
     def edit_button(self, obj):
@@ -25,8 +26,8 @@ class RezervareAdmin(admin.ModelAdmin):
 
 @admin.register(Tur)
 class TurAdmin(admin.ModelAdmin):
-    list_display = ('nume', 'type', 'pachet', 'edit_button', 'delete_button')
-    list_filter = ('nume', 'type')
+    list_display = ('nume', 'pret', 'type', 'pachet', 'edit_button', 'delete_button')
+    list_filter = ('nume', 'type', 'pret')
 
     def edit_button(self, obj):
         url = reverse('admin:%s_%s_change' % (obj._meta.app_label, obj._meta.model_name), args=[obj.pk])

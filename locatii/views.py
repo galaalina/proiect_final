@@ -22,10 +22,16 @@ def acasa(request):
         'tururi': tururi,
     })
 
+
+#locatii
+
+# afiseaza locatii
 def lista_locatie(request):
     locatii = Locatie.objects.all()
     return render(request, 'lista_locatie.html', {'locatii': locatii})
 
+
+# creeaza locatii
 def is_angajat(user):
     return user.is_authenticated and user.groups.filter(name='angajati').exists()
 
@@ -45,15 +51,14 @@ def adauga_locatie(request):
         form = LocatieForm()
         return render(request, 'adauga_locatie.html', {'form': form})
 
-
+# afiseaza detalii locatie
 def detalii_locatie(request, locatie_id):
     locatie = get_object_or_404(Locatie, id=locatie_id)
     tururi=locatie.tururi.filter(type='predefinit')
 
     return render(request, 'detalii_locatie.html', {'locatie': locatie, 'tururi': tururi})
 
-
-
+# update/editeaza locatie
 @login_required
 @user_passes_test(is_angajat)
 def editeaza_locatie(request, locatie_id):
@@ -68,6 +73,7 @@ def editeaza_locatie(request, locatie_id):
 
     return render(request, 'adauga_locatie.html', {'form': form, 'locatie':locatie})
 
+# sterge locatie
 @login_required
 @user_passes_test(is_angajat)
 def sterge_locatie(request, locatie_id):
@@ -76,16 +82,13 @@ def sterge_locatie(request, locatie_id):
         locatie.delete()
         return redirect('lista_locatie')
 
-    return render(request, 'confirmare_stergere.html', {'tlocatie': locatie})
-
-
-
+#afiseaza tururile
 def lista_tur(request):
     tururi = Tur.objects.filter(type='predefinit')
     return render(request, 'lista_tur.html', {'tururi': tururi})
 
 
-
+#creeaza tur
 @login_required
 @user_passes_test(is_angajat)
 def adauga_tur(request):
@@ -100,12 +103,15 @@ def adauga_tur(request):
         form = TurForm()
         return render(request, 'adauga_tur.html', {'form': form})
 
-
+# afiseaza detalii tur
 def detalii_tur(request, tur_id):
     tur = get_object_or_404(Tur, id=tur_id)
     locatii = tur.locatii.all()
     return render(request, 'detalii_tur.html', {'tur': tur, 'locatii': locatii})
 
+
+
+#update/edit tur
 @login_required
 @user_passes_test(is_angajat)
 def editeaza_tur(request, tur_id):
@@ -120,6 +126,7 @@ def editeaza_tur(request, tur_id):
 
     return render(request, 'adauga_tur.html', {'form': form, 'tur': tur})
 
+#stergere tur
 @login_required
 @user_passes_test(is_angajat)
 def sterge_tur(request, tur_id):
@@ -128,10 +135,8 @@ def sterge_tur(request, tur_id):
         tur.delete()
         return redirect('lista_tur')
 
-    return render(request, 'confirmare_stergere.html', {'tur': tur})
 
-
-# Creare rezervare
+# creeaza rezervare
 class RezervareCreateView(LoginRequiredMixin, CreateView):
     model = Rezervare
     form_class = RezervareForm
@@ -140,9 +145,11 @@ class RezervareCreateView(LoginRequiredMixin, CreateView):
 
     def form_valid(self, form):
         form.instance.utilizator = self.request.user
+        form.instance.suma = form.instance.numar_persoane * form.instance.tur.pret
         return super().form_valid(form)
 
-# Afișare rezervările utilizatorului
+
+# afișare rezervările utilizatorului
 class RezervarileMeleView(LoginRequiredMixin, ListView):
     model = Rezervare
     template_name = 'rezervarile_mele.html'
@@ -151,13 +158,12 @@ class RezervarileMeleView(LoginRequiredMixin, ListView):
     def get_queryset(self):
         return Rezervare.objects.filter(utilizator=self.request.user)
 
-# Anularea unei rezervări
+# anulare rezervare
 @login_required
 def anuleaza_rezervare(request, pk):
     rezervare = get_object_or_404(Rezervare, pk=pk, utilizator=request.user)
     rezervare.delete()
     return redirect('lista_rezervari')
-
 
 
 def contact(request):

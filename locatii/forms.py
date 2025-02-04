@@ -27,10 +27,11 @@ class TurForm(ModelForm):
             'locatii': SelectMultiple(attrs={'class': 'form-control'}),
             'type': Select(attrs={'class': 'form-control'}),
             'durata': TextInput(attrs={'class': 'form-control', 'placeholder': 'Durata turului'}),
-            'pret': TextInput(attrs={'class': 'form-control', 'placeholder': 'Prețul turului'}),
+            'pret': NumberInput(attrs={'class': 'form-control', 'placeholder': 'Prețul turului'}),
             'pachet': Textarea(attrs={'class': 'form-control', 'rows': 4, 'placeholder': 'Detalii pachet...'}),
             'imagine_tur': ClearableFileInput(attrs={'class': 'form-control'}),
         }
+
 
 
 class RezervareForm(ModelForm):
@@ -40,6 +41,6 @@ class RezervareForm(ModelForm):
         widgets = {
             'numar_persoane':NumberInput(attrs={'class': 'form-control', 'min': 1, 'max': 10}),
             'tur': Select(attrs={'class': 'form-control'}),
-            'data_inceput': DateInput(attrs={'type': 'date', 'class': 'form-control'}),
+            'data_inceput': DateInput(attrs={'type': 'date', 'class': 'form-control'})
 
         }

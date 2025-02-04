@@ -11,7 +11,7 @@
     <p>{{tur.descriere}}</p>
     <p>Durata: {{tur.durata }}</p>
     <p>Pachet: {{ tur.pachet }}</p>
-    <p>Pret: {{ tur.pret }}</p>
+    <p>Pret: {{ tur.pret }} Lei/persoana</p>
     <h3><i>Locatii incluse</i></h3>
 
     <ul>
@@ -23,7 +23,7 @@
 
     </ul>
     {% if user.is_authenticated and user.groups.all.0.name == "angajati" %}
-    <a href="{% url 'editeaza_tur' tur.id %}" class="btn btn-warning">Editează</a>
+    <a href="{% url 'editeaza_tur' tur.id %}" class="btn btn-info">Editează</a>
 
     <form method="post" action="{% url 'sterge_tur' tur.id %}" style="display:inline;">
         {% csrf_token %}
