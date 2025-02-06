@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Confirma stergerea</title>
+</head>
+<body>
+{% extends 'base.html' %}
+{% block content %}
+<form method="POST">
+  {% csrf_token%}
+  <p>Sigur vrei sa stergi recenzia?</p>
+
+  <input type="submit" value="Confirma" class="btn btn-danger">
+</form>
+{% endblock %}
+
+</body>
+</html>

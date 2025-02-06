@@ -1,9 +1,9 @@
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.shortcuts import *
 from .models import *
-from .forms import LocatieForm, TurForm, RezervareForm
+from .forms import LocatieForm, TurForm, RezervareForm, RecenzieForm
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.views.generic import CreateView, ListView, UpdateView
+from django.views.generic import CreateView, ListView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 
 # Create your views here.
@@ -107,7 +107,14 @@ def adauga_tur(request):
 def detalii_tur(request, tur_id):
     tur = get_object_or_404(Tur, id=tur_id)
     locatii = tur.locatii.all()
-    return render(request, 'detalii_tur.html', {'tur': tur, 'locatii': locatii})
+    recenzii = Recenzie.objects.filter(tur=tur).order_by('-pk')[:3]
+    user_deja_recenzat = False
+
+    for recenzie in recenzii:
+        if recenzie.user == request.user:
+            user_deja_recenzat = True
+
+    return render(request, 'detalii_tur.html', {'tur': tur, 'locatii': locatii, 'user_deja_recenzat': user_deja_recenzat })
 
 
 
@@ -169,8 +176,46 @@ def anuleaza_rezervare(request, pk):
 def contact(request):
     return render(request, 'contact.html')
 
+@login_required()
+def adauga_recenzie(request, tur_id):
+    if request.method == "POST":
+        scor = request.POST['scor']
+        comentariu = request.POST['comentariu']
+        tur = Tur.objects.get(id=tur_id)
+        Recenzie.objects.create(
+            scor = scor,
+            comentariu = comentariu,
+            tur = tur,
+            user = request.user,
+        )
+        return redirect('detalii_tur',id=tur_id)
 
+    else:
+        return redirect('lista_tur')
 
+class RecezieUpdateView(LoginRequiredMixin, UpdateView):
+    template_name='editeaza_recenzie.html'
+    form_class = RecenzieForm
+    model=Recenzie
+    success_url = reverse_lazy('lista_tur')
+
+class RecenzieDeleteView(LoginRequiredMixin, DeleteView):
+    template_name='recenzie_confirma_stergerea.html'
+    model = Recenzie
+    success_url = reverse_lazy('lista_tur')
+
+def afiseaza_recenzii(request, tur_id):
+    tur= Tur.objects.get(pk=tur_id)
+    recenzii = Recenzie.objects.filter(tur=tur).order_by('-pk')[:3]
+
+    return render(
+        request,
+        template_name='toate_recenziile.html',
+        context ={
+            'tur': tur,
+            'recenzie': recenzii,
+        }
+    )
 
 
 

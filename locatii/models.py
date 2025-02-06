@@ -75,4 +75,16 @@ class Rezervare(models.Model):
     def __str__(self):
         return f"{self.tur}, {self.utilizator}"
 
+class Recenzie(models.Model):
+    class Meta:
+        verbose_name_plural = 'Recenzii'
+
+    scor = IntegerField()
+    comentariu = CharField(max_length=250, blank=True, null=True)
+    tur = ForeignKey(Tur, on_delete=CASCADE, related_name='recenzii')
+    user = ForeignKey(User, on_delete=CASCADE, related_name='recenzii')
+    creata = DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'Recenzie pentru {self.tur.nume}, adaugat de {self.user.username}'
 

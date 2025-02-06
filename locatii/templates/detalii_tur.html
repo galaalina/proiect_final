@@ -32,6 +32,46 @@
         </button>
     </form>
     {% endif %}
+<!-- Sectiune pentru recenzii -->
+    {% if not user_deja_recenzat %}
+    <div>
+        <h1>Adauga o recenzie</h1>
+        <form method="post" action="{% url 'adauga_recenzie' tur.id %}">
+            {% csrf_token %}
+            <label for ="scor">Scor</label>
+            <select id="scor" name ="scor">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+            </select>
+            <br>
+            <label for ="comentariu">Adauga comentariu(optional)</label>
+            <input type="text" id="comentariu" name="comentariu">
+            <br>
+            <input type="submit" class="btn btn-primary" value = "Adauga">
+        </form>
+    </div>
+    {% endif %}
+
+    <div>
+        <h1>Recenzii</h1>
+        <a href="{% url 'afiseaza_recenzii' object.pk %}">Vezi toate recenziile</a>
+        <ul>
+            {% for recenzie in recenzii %}
+            <li>
+                <p>Adaugat de {{ recenzie.user.username }}</p>
+                <p>Scor: {{ recenzie.scor }}</p>
+                <p> Comentariu: {{ recenzie.comentariu }}</p>
+                {% if recenzie.user == user %}
+                    <a class="btn btn_warning" href="{% url 'editeaza-recenzia'% recenzie.pk}">Editeaza</a>
+                    <a class="btn btn_danger" href="{% url 'sterge_recenzia' recenzie.pk}">Sterge</a>
+                {% endif %}
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
     {% endblock %}
 
 </body>

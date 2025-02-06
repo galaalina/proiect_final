@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Recenzii</title>
+</head>
+<body>
+{% extends 'base.html' %}
+{% block content %}
+<h1>Toate recenziile pentru {{tur.nume}}</h1>
+<ul>
+    {% for recenzie in recenzii %}
+    <li>
+        <p> Adaugat de {{ recenzie.user.username }}</p>
+        <p> Scor {{ recenzie.scor }}</p>
+        <p> Comentariu: {{ recenzie.comentariu }}</p>
+    </li>
+    {% endfor %}
+</ul>
+{% endblock%}
+
+</body>
+</html>

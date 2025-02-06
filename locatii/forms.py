@@ -1,6 +1,6 @@
 from django.forms import *
 
-from locatii.models import Locatie, Tur, Rezervare
+from locatii.models import Locatie, Tur, Rezervare, Recenzie
 
 
 class LocatieForm(ModelForm):
@@ -44,3 +44,10 @@ class RezervareForm(ModelForm):
             'data_inceput': DateInput(attrs={'type': 'date', 'class': 'form-control'})
 
         }
+
+class RecenzieForm(ModelForm):
+    class Meta:
+        model = Recenzie
+        fields = ['scor', 'comentariu']
+
+

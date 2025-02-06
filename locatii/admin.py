@@ -1,12 +1,12 @@
 from django.contrib import admin
 from django.utils.html import format_html
 from django.urls import reverse
-from .models import Judet, Oras, Locatie, Tur, Rezervare
+from .models import Judet, Oras, Locatie, Tur, Rezervare, Recenzie
 
 # Register your models here.
 admin.site.register(Judet)
 admin.site.register(Oras)
-
+admin.site.register(Recenzie)
 
 
 

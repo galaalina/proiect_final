@@ -23,7 +23,7 @@ from conturi import urls as conturi_urls
 
 from locatii import views
 from locatii.views import RezervareCreateView, RezervarileMeleView, anuleaza_rezervare, editeaza_tur, sterge_tur, \
-    sterge_locatie, editeaza_locatie, contact
+    sterge_locatie, editeaza_locatie, contact, adauga_recenzie, RecezieUpdateView, RecenzieDeleteView, afiseaza_recenzii
 
 # from locatii.views import lista_locatie, detalii_locatie, lista_tur, detalii_tur
 
@@ -54,6 +54,10 @@ urlpatterns = [
     path('rezervare/', RezervareCreateView.as_view(), name='creeaza_rezervare'),
     path('rezervarile-mele/', RezervarileMeleView.as_view(), name='lista_rezervari'),
     path('rezervare/anuleaza/<int:pk>/', anuleaza_rezervare, name='anuleaza_rezervare'),
+    path('adauga_recenzie/<tur_id>', adauga_recenzie, name='adauga_recenzie'),
+    path('editeaza_recenzie/<pk>', RecezieUpdateView.as_view(), name='editeaza_recenzia'),
+    path('sterge_recenzia/<pk>', RecenzieDeleteView.as_view(), name='sterge_recenzia'),
+    path('recenzii/<post_id>', afiseaza_recenzii, name='afiseaza_recenzii'),
     #
 
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
