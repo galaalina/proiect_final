@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Schimba parola</title>
+  <style>
+        label {
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+{% extends 'base.html' %}
+{% block content %}
+<form method="post">
+    {% csrf_token %}
+    {{ form }}
+<input type = 'submit' value = 'Reseteaza' class='btn btn-primary'>
+
+</form>
+{% endblock %}
+</body>
+</html>
