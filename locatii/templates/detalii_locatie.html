@@ -7,29 +7,45 @@
 <body>
     {% extends 'base.html' %}
     {% block content %}
-    <h3><i>{{ locatie.nume }}</i></h3>
-    <p>{{locatie.descriere}}</p>
-    <h4><i> Tururi care includ locatia:</i></h4>
-    <ol>
+    <div class="container mt-4">
+    <div class="card shadow-sm p-4" style="background-color: aliceblue">
+        <h3><i>{{ locatie.nume }}</i></h3>
+        <p class="text-muted">{{locatie.descriere}}</p>
+    </div>
+    </div>
+    <div class="container mt-4">
+
+        <h4><i> Tururi care includ locatia:</i></h4>
+        <ol class="list-group">
         {% for tur in tururi %}
-        <li>
-            <a href="{% url 'detalii_tur' tur.id %}">{{tur.nume}}</a>
-        </li>
+            <li class="list-group-item">
+                <a href="{% url 'detalii_tur' tur.id %}">{{tur.nume}}</a>
+            </li>
         {% endfor %}
-    </ol>
-    <p>Localizare: {{ locatie.oras.nume }}, {{ locatie.judet.nume }}</p>
-    <p>Descriere oras:</p>
-    <p>{{locatie.oras.descriere}}</p>
+        </ol>
+    </div>
+
+    <div class="container mt-4">
+    <div class="card shadow-sm p-4" style="background-color: aliceblue">
+        <p class="text-muted">Localizare: {{ locatie.oras.nume }}, {{ locatie.judet.nume }}</p>
+        <p class="text-muted">Descriere oras:</p>
+        <p class="text-muted">{{locatie.oras.descriere}}</p>
+    </div>
+    </div>
     {% if user.is_authenticated and user.groups.all.0.name == "angajati" %}
-    <a href="{% url 'editeaza_locatie' locatie.id %}" class="btn btn-warning">Editează</a>
+    <div class="container mt-3">
+       <br>
+    <a href="{% url 'editeaza_locatie' locatie.id %}" class="btn btn-info">✏️ Editează</a>
 
     <form method="post" action="{% url 'sterge_locatie' locatie.id %}" style="display:inline;">
         {% csrf_token %}
         <button type="submit" class="btn btn-danger" onclick="return confirm('Sigur vrei să ștergi acesta locatie?');">
-            Șterge
+             🗑️ Șterge
         </button>
     </form>
+    </div>
     {% endif %}
+
     {% endblock %}
 </body>
 </html>

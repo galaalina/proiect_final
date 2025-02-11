@@ -1,7 +1,7 @@
 from django.shortcuts import render
 
 # Create your views here.
-from django.contrib.auth.views import LoginView, LogoutView
+from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView
 from django.urls import reverse_lazy
 from django.views.generic.edit import CreateView, UpdateView
 from django.contrib.auth.models import User, Group
@@ -9,6 +9,11 @@ from django.shortcuts import redirect
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .forms import UserRegisterForm, ProfileForm
 from .models import Profile
+
+class CustomPasswordChangeView(PasswordChangeView):
+    template_name = 'schimba_parola.html'
+    success_url = reverse_lazy('acasa')
+
 
 class UserRegisterView(CreateView):
     form_class = UserRegisterForm

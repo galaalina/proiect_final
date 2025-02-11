@@ -107,14 +107,16 @@ def adauga_tur(request):
 def detalii_tur(request, tur_id):
     tur = get_object_or_404(Tur, id=tur_id)
     locatii = tur.locatii.all()
-    recenzii = Recenzie.objects.filter(tur=tur).order_by('-pk')[:3]
-    user_deja_recenzat = False
+    recenzii = Recenzie.objects.filter(tur=tur).order_by('-id')[:3]
 
-    for recenzie in recenzii:
-        if recenzie.user == request.user:
-            user_deja_recenzat = True
+    user_deja_recenzat = Recenzie.objects.filter(tur=tur, user=request.user).exists()
 
-    return render(request, 'detalii_tur.html', {'tur': tur, 'locatii': locatii, 'user_deja_recenzat': user_deja_recenzat })
+    return render(request, 'detalii_tur.html', {
+        'tur': tur,
+        'locatii': locatii,
+        'user_deja_recenzat': user_deja_recenzat,
+        'recenzii': recenzii
+    })
 
 
 
@@ -176,46 +178,44 @@ def anuleaza_rezervare(request, pk):
 def contact(request):
     return render(request, 'contact.html')
 
-@login_required()
+@login_required
 def adauga_recenzie(request, tur_id):
     if request.method == "POST":
-        scor = request.POST['scor']
-        comentariu = request.POST['comentariu']
-        tur = Tur.objects.get(id=tur_id)
+        scor = request.POST.get('scor')
+        comentariu = request.POST.get('comentariu')
+        tur = get_object_or_404(Tur, id=tur_id)
+
         Recenzie.objects.create(
-            scor = scor,
-            comentariu = comentariu,
-            tur = tur,
-            user = request.user,
+            scor=scor,
+            comentariu=comentariu,
+            tur=tur,
+            user=request.user,
         )
-        return redirect('detalii_tur',id=tur_id)
 
-    else:
-        return redirect('lista_tur')
+        return redirect('detalii_tur', tur_id=tur_id)
 
-class RecezieUpdateView(LoginRequiredMixin, UpdateView):
-    template_name='editeaza_recenzie.html'
+    return redirect('lista_tur')
+
+
+class RecenzieUpdateView(LoginRequiredMixin, UpdateView):
+    template_name = 'editeaza_recenzie.html'
     form_class = RecenzieForm
-    model=Recenzie
+    model = Recenzie
     success_url = reverse_lazy('lista_tur')
 
 class RecenzieDeleteView(LoginRequiredMixin, DeleteView):
-    template_name='recenzie_confirma_stergerea.html'
+    template_name = 'recenzie_confirma_stergerea.html'
     model = Recenzie
     success_url = reverse_lazy('lista_tur')
 
 def afiseaza_recenzii(request, tur_id):
-    tur= Tur.objects.get(pk=tur_id)
-    recenzii = Recenzie.objects.filter(tur=tur).order_by('-pk')[:3]
+    tur = get_object_or_404(Tur, pk=tur_id)
+    recenzii = Recenzie.objects.filter(tur=tur).order_by('-pk')
 
-    return render(
-        request,
-        template_name='toate_recenziile.html',
-        context ={
-            'tur': tur,
-            'recenzie': recenzii,
-        }
-    )
+    return render(request, 'toate_recenziile.html', {
+        'tur': tur,
+        'recenzii': recenzii,
+    })
 
 
 

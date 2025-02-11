@@ -7,71 +7,98 @@
 <body>
     {% extends 'base.html' %}
     {% block content %}
-    <h3><i>{{tur.nume}}</i></h3>
-    <p>{{tur.descriere}}</p>
-    <p>Durata: {{tur.durata }}</p>
-    <p>Pachet: {{ tur.pachet }}</p>
-    <p>Pret: {{ tur.pret }} Lei/persoana</p>
-    <h3><i>Locatii incluse</i></h3>
+    <div class="container mt-4">
+    <div class="card shadow-sm p-4" style="background-color: aliceblue">
+        <h3><i>{{ tur.nume }}</i></h3>
+        <p class="text-muted">{{ tur.descriere }}</p>
+        <p><strong>Durata:</strong> {{ tur.durata }} ore</p>
+        <p><strong>Pachet:</strong> {{ tur.pachet }}</p>
+        <p><strong>Preț:</strong> <span class="badge badge-success">{{ tur.pret }} Lei/persoană</span></p>
+    </div>
+    </div>
 
-    <ul>
-      {% for locatie in tur.locatii.all %}
-          <li>
-              <a href="{% url 'detalii_locatie' locatie.id %}" >{{ locatie.nume }}</a>
-          </li>
-      {% endfor %}
-
+    <div class="container mt-4">
+        <h4><i>Locații incluse</i></h4>
+    <ul class="list-group">
+        {% for locatie in locatii %}
+            <li class="list-group-item">
+                <a href="{% url 'detalii_locatie' locatie.id %}" class="text-primary ">
+                    {{ locatie.nume }}
+                </a>
+            </li>
+        {% endfor %}
     </ul>
-    {% if user.is_authenticated and user.groups.all.0.name == "angajati" %}
-    <a href="{% url 'editeaza_tur' tur.id %}" class="btn btn-info">Editează</a>
+</div>
 
-    <form method="post" action="{% url 'sterge_tur' tur.id %}" style="display:inline;">
-        {% csrf_token %}
-        <button type="submit" class="btn btn-danger" onclick="return confirm('Sigur vrei să ștergi acest tur?');">
-            Șterge
-        </button>
-    </form>
-    {% endif %}
-<!-- Sectiune pentru recenzii -->
-    {% if not user_deja_recenzat %}
-    <div>
-        <h1>Adauga o recenzie</h1>
-        <form method="post" action="{% url 'adauga_recenzie' tur.id %}">
+    {% if user.is_authenticated and user.groups.all.0.name == "angajati" %}
+   <div class="container mt-3">
+       <br>
+        <a href="{% url 'editeaza_tur' tur.id %}" class="btn btn-info">✏️ Editează</a>
+
+        <form method="post" action="{% url 'sterge_tur' tur.id %}" class="d-inline">
             {% csrf_token %}
-            <label for ="scor">Scor</label>
-            <select id="scor" name ="scor">
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-            </select>
-            <br>
-            <label for ="comentariu">Adauga comentariu(optional)</label>
-            <input type="text" id="comentariu" name="comentariu">
-            <br>
-            <input type="submit" class="btn btn-primary" value = "Adauga">
+            <button type="submit" class="btn btn-danger" onclick="return confirm('Sigur vrei să ștergi acest tur?');">
+                🗑️ Șterge
+            </button>
         </form>
     </div>
-    {% endif %}
+{% endif %}
+<!-- Sectiune pentru recenzii -->
+    {% if not user_deja_recenzat %}
+    <div class="container mt-4">
+        <div class="card p-4 shadow-sm">
+            <h4 class="text-success">Adaugă o recenzie</h4>
+            <form method="post" action="{% url 'adauga_recenzie' tur.id %}">
+                {% csrf_token %}
 
-    <div>
-        <h1>Recenzii</h1>
-        <a href="{% url 'afiseaza_recenzii' object.pk %}">Vezi toate recenziile</a>
-        <ul>
-            {% for recenzie in recenzii %}
-            <li>
-                <p>Adaugat de {{ recenzie.user.username }}</p>
-                <p>Scor: {{ recenzie.scor }}</p>
-                <p> Comentariu: {{ recenzie.comentariu }}</p>
-                {% if recenzie.user == user %}
-                    <a class="btn btn_warning" href="{% url 'editeaza-recenzia'% recenzie.pk}">Editeaza</a>
-                    <a class="btn btn_danger" href="{% url 'sterge_recenzia' recenzie.pk}">Sterge</a>
-                {% endif %}
-            </li>
-            {% endfor %}
-        </ul>
+                <div class="form-group">
+                    <label for="scor">Scor</label>
+                    <select id="scor" name="scor" class="form-control w-50">
+                        {% for i in "12345" %}
+                            <option value="{{ i }}">{{ i }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="comentariu">Comentariu (optional)</label>
+                    <textarea id="comentariu" name="comentariu" class="form-control" rows="3"></textarea>
+                </div>
+
+                <button type="submit" class="btn btn-primary">💬 Adaugă recenzia</button>
+            </form>
+        </div>
     </div>
+{% endif %}
+
+<div class="container mt-4">
+    <h4 class="text-info">Recenzii recente</h4>
+    <a href="{% url 'afiseaza_recenzii' tur.id %}" class="btn btn-outline-primary mb-3">👀 Vezi toate recenziile</a>
+
+    {% if recenzii %}
+        <div class="row">
+            {% for recenzie in recenzii %}
+                <div class="col-md-4 col-sm-6">
+                    <div class="card p-3 mb-3 shadow-sm h-100">
+                        <p class="font-weight-bold text-dark">{{ recenzie.user.username }}</p>
+                        <p>⭐ <strong>{{ recenzie.scor }}</strong></p>
+                        <p>{{ recenzie.comentariu }}</p>
+
+                        {% if recenzie.user == user %}
+                            <div class="d-flex justify-content-between">
+                                <a class="btn btn-info btn-sm" href="{% url 'editeaza_recenzie' recenzie.pk %}">✏️</a>
+                                <a class="btn btn-danger btn-sm" href="{% url 'sterge_recenzie' recenzie.pk %}">🗑️</a>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p class="text-muted">Nu există recenzii pentru acest tur încă.</p>
+    {% endif %}
+</div>
+
     {% endblock %}
 
 </body>

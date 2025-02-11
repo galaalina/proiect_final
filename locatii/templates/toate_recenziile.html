@@ -7,16 +7,40 @@
 <body>
 {% extends 'base.html' %}
 {% block content %}
-<h1>Toate recenziile pentru {{tur.nume}}</h1>
-<ul>
-    {% for recenzie in recenzii %}
-    <li>
-        <p> Adaugat de {{ recenzie.user.username }}</p>
-        <p> Scor {{ recenzie.scor }}</p>
-        <p> Comentariu: {{ recenzie.comentariu }}</p>
-    </li>
-    {% endfor %}
-</ul>
+<div class="container mt-4">
+    <h4 class="text-info"><i>{{ tur.nume }}</i></h4>
+
+    {% if recenzii %}
+        <div class="row">
+            {% for recenzie in recenzii %}
+                <div class="col-md-4 col-sm-6 {% if forloop.counter <= 3 %}mb-4{% endif %}">
+                    <div class="card p-3 shadow-sm h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">⭐ Scor: <strong>{{ recenzie.scor }}</strong></h5>
+                            <h6 class="card-subtitle mb-2 text-muted">Adăugat de: {{ recenzie.user.username }}</h6>
+                            <p class="card-text"><strong>Comentariu:</strong> {{ recenzie.comentariu }}</p>
+                            <p class="text-muted"><small>Data: {{ recenzie.creata }}</small></p>
+
+                            {% if recenzie.user == user %}
+                                <div class="d-flex justify-content-between">
+                                    <a href="{% url 'editeaza_recenzie' recenzie.pk %}" class="btn btn-info btn-sm">
+                                        ✏️ Editează
+                                    </a>
+                                    <a href="{% url 'sterge_recenzie' recenzie.pk %}" class="btn btn-danger btn-sm">
+                                        🗑️ Șterge
+                                    </a>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p class="text-muted">Nu există recenzii pentru acest tur încă.</p>
+    {% endif %}
+</div>
+
 {% endblock%}
 
 </body>
