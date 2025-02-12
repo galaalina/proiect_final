@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'locatii',
-    'conturi'
+    'conturi',
+    'django_extensions'
 ]
 
 MIDDLEWARE = [
