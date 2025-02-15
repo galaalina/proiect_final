@@ -13,7 +13,10 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h2><i>Rezervă un tur</i></h2>
+<br>
+<br>
+
+<h3><i>Rezervă un tur</i></h3>
   <form method="post">
     {% csrf_token %}
     {{ form.as_p }}

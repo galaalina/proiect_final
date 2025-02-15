@@ -1,4 +1,5 @@
 from django.contrib.auth.decorators import login_required, user_passes_test
+from django.core.paginator import Paginator
 from django.shortcuts import *
 from .models import *
 from .forms import LocatieForm, TurForm, RezervareForm, RecenzieForm
@@ -28,7 +29,11 @@ def acasa(request):
 # afiseaza locatii
 def lista_locatie(request):
     locatii = Locatie.objects.all()
-    return render(request, 'lista_locatie.html', {'locatii': locatii})
+    paginator = Paginator(locatii, 6)  # 6 iteme per pagină
+
+    page_number = request.GET.get('page')  # Obține numărul paginii din URL
+    page_obj = paginator.get_page(page_number)
+    return render(request, 'lista_locatie.html', {'locatii': locatii,'page_obj': page_obj })
 
 
 # creeaza locatii
@@ -85,7 +90,10 @@ def sterge_locatie(request, locatie_id):
 #afiseaza tururile
 def lista_tur(request):
     tururi = Tur.objects.filter(type='predefinit')
-    return render(request, 'lista_tur.html', {'tururi': tururi})
+    paginator = Paginator(tururi, 6)
+    page_number = request.GET.get('page')  # Obține numărul paginii din URL
+    page_obj = paginator.get_page(page_number)
+    return render(request, 'lista_tur.html', {'tururi': tururi, 'page_obj': page_obj })
 
 
 #creeaza tur

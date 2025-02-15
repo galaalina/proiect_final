@@ -22,6 +22,16 @@
       height: 200px;
       object-fit: cover; /* Menține imaginea în limitele div-ului */
     }
+
+        .pagination .page-link {
+        background-color: #17a2b8; /* Bootstrap info */
+        color: white;
+        border-color: #17a2b8;
+    }
+       .pagination .page-link:hover {
+        background-color: #138496; /* Culoare mai închisă la hover */
+        border-color: #117a8b;
+    }
   </style>
 
 </head>
@@ -31,7 +41,7 @@
     <div class="container mt-5">
       <h3 class="mb-4 text-center"><i>Tururi Disponibile</i></h3>
     <div class="row">
-      {% for tur in tururi %}
+      {% for tur in page_obj %}
       <div class="col-md-4 mb-4 d-flex">
         <div class="card shadow-sm w-100">
           {% if tur.imagine_tur %}
@@ -46,6 +56,33 @@
       </div>
       {% endfor %}
     </div>
+        <nav aria-label="Page navigation">
+        <ul class="pagination justify-content-center">
+            {% if page_obj.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page=1">Prima</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Înapoi</a>
+                </li>
+            {% endif %}
+
+            <li class="page-item active">
+                <span class="page-link">
+                    Pagina {{ page_obj.number }} din {{ page_obj.paginator.num_pages }}
+                </span>
+            </li>
+
+            {% if page_obj.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.next_page_number }}">Înainte</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">Ultima</a>
+                </li>
+            {% endif %}
+        </ul>
+    </nav>
   </div>
   {% endblock %}
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>

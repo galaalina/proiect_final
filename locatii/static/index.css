@@ -1,4 +1,13 @@
 
 .jumbotron{
-    background-color: aliceblue;
-}
+    min-height: 100vh;
+    background-color: antiquewhite;
+    }
+
+body {
+    background-image: url('/static/imagini/tourism_background_aliceblue.jpg');
+    background-size: cover; /* Asigură că imaginea acoperă întregul ecran */
+    background-position: center; /* Centrează imaginea */
+    background-repeat: no-repeat; /* Previne repetarea imaginii */
+    background-attachment: fixed; /* Menține imaginea fixă când faci scroll */
+    }
