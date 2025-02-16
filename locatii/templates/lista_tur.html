@@ -60,29 +60,30 @@
         <ul class="pagination justify-content-center">
             {% if page_obj.has_previous %}
                 <li class="page-item">
-                    <a class="page-link" href="?page=1">Prima</a>
+                    <a class="btn btn-info text-white" href="?page=1">Prima</a>
                 </li>
                 <li class="page-item">
-                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Înapoi</a>
+                    <a class="btn btn-info text-white" href="?page={{ page_obj.previous_page_number }}">Înapoi</a>
                 </li>
             {% endif %}
 
             <li class="page-item active">
-                <span class="page-link">
+                <span class="btn btn-info text-white">
                     Pagina {{ page_obj.number }} din {{ page_obj.paginator.num_pages }}
                 </span>
             </li>
 
             {% if page_obj.has_next %}
                 <li class="page-item">
-                    <a class="page-link" href="?page={{ page_obj.next_page_number }}">Înainte</a>
+                    <a class="btn btn-info text-white" href="?page={{ page_obj.next_page_number }}">Înainte</a>
                 </li>
                 <li class="page-item">
-                    <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">Ultima</a>
+                    <a class="btn btn-info text-white" href="?page={{ page_obj.paginator.num_pages }}">Ultima</a>
                 </li>
             {% endif %}
         </ul>
     </nav>
+
   </div>
   {% endblock %}
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>

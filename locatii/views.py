@@ -6,7 +6,7 @@ from .forms import LocatieForm, TurForm, RezervareForm, RecenzieForm
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import CreateView, ListView, UpdateView, DeleteView
 from django.urls import reverse_lazy
-
+from .forms import SearchForm
 # Create your views here.
 
 # views.py
@@ -87,13 +87,25 @@ def sterge_locatie(request, locatie_id):
         locatie.delete()
         return redirect('lista_locatie')
 
+#cautare locatie
+def search_view(request):
+    query = request.GET.get('query', '')
+    results = []
+
+    if query:
+        results = Locatie.objects.filter(nume__icontains=query)  # Filtrare după nume
+
+    form = SearchForm(initial={'query': query})
+    return render(request, 'rezultat_cautare.html', {'form': form, 'results': results, 'query': query})
+
 #afiseaza tururile
 def lista_tur(request):
-    tururi = Tur.objects.filter(type='predefinit')
+    tururi = Tur.objects.filter(type='predefinit').order_by('id')
     paginator = Paginator(tururi, 6)
-    page_number = request.GET.get('page')  # Obține numărul paginii din URL
+    page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
     return render(request, 'lista_tur.html', {'tururi': tururi, 'page_obj': page_obj })
+
 
 
 #creeaza tur

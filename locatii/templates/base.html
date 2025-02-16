@@ -86,6 +86,14 @@
                     <a class="nav-item nav-link active" href="{% url 'contact' %}"><i>Contact</i></a>
                 </div>
             </div>
+            <!-- Bara de căutare în navbar -->
+    <form class="form-inline my-2 my-lg-0" method="GET" action="{% url 'cautare' %}">
+        <input class="form-control mr-sm-2" type="search" name="query" placeholder="Caută locație..." aria-label="Search">
+        <button class="btn btn-outline-light my-2 my-sm-0" type="submit"><i>Caută</i></button>
+    </form>
+
+<div class="nav-item dropdown">
+
             <div class="nav-item dropdown">
 <!--            # user este o variabila introdusa de Django in toate teplaturile-->
             {% if user.is_authenticated %}
@@ -112,6 +120,7 @@
             {% endif %}
 
             </div>
+        </div>
         </div>
     </nav>
 

@@ -23,8 +23,8 @@ from conturi import urls as conturi_urls
 
 from locatii import views
 from locatii.views import RezervareCreateView, RezervarileMeleView, anuleaza_rezervare, editeaza_tur, sterge_tur, \
-    sterge_locatie, editeaza_locatie, contact, adauga_recenzie,  RecenzieDeleteView, \
-    afiseaza_recenzii, RecenzieUpdateView
+    sterge_locatie, editeaza_locatie, contact, adauga_recenzie, RecenzieDeleteView, \
+    afiseaza_recenzii, RecenzieUpdateView, search_view
 
 # from locatii.views import lista_locatie, detalii_locatie, lista_tur, detalii_tur
 
@@ -41,6 +41,7 @@ urlpatterns = [
     path('adauga_locatie/', views.adauga_locatie, name='adauga_locatie'),
     path('locatie/<int:locatie_id>/edit/', editeaza_locatie, name='editeaza_locatie'),
     path('locatie/<int:locatie_id>/delete/', sterge_locatie, name='sterge_locatie'),
+    path('search/', search_view, name='cautare'),
     #Tururi
     path('tururi/', views.lista_tur, name='lista_tur'),
     path('tururi/<int:tur_id>/', views.detalii_tur, name='detalii_tur'),

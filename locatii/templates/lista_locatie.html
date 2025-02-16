@@ -24,13 +24,7 @@
       object-fit: cover; /* Menține imaginea în limitele div-ului */
     }
 
-    .pagination .page-link {
-        background-color: #17a2b8; /* Bootstrap info */
-        color: white;
-        border-color: #17a2b8;
-    }
-
-        .pagination .page-link:hover {
+    .pagination.btn-info:hover {
         background-color: #138496; /* Culoare mai închisă la hover */
         border-color: #117a8b;
     }
@@ -67,25 +61,25 @@
         <ul class="pagination justify-content-center">
             {% if page_obj.has_previous %}
                 <li class="page-item">
-                    <a class="page-link" href="?page=1">Prima</a>
+                    <a class="btn btn-info text-white" href="?page=1">Prima</a>
                 </li>
                 <li class="page-item">
-                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Înapoi</a>
+                    <a class="btn btn-info text-white" href="?page={{ page_obj.previous_page_number }}">Înapoi</a>
                 </li>
             {% endif %}
 
             <li class="page-item active">
-                <span class="page-link">
+                <span class="btn btn-info text-white">
                     Pagina {{ page_obj.number }} din {{ page_obj.paginator.num_pages }}
                 </span>
             </li>
 
             {% if page_obj.has_next %}
                 <li class="page-item">
-                    <a class="page-link" href="?page={{ page_obj.next_page_number }}">Înainte</a>
+                    <a class="btn btn-info text-white" href="?page={{ page_obj.next_page_number }}">Înainte</a>
                 </li>
                 <li class="page-item">
-                    <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">Ultima</a>
+                    <a class="btn btn-info text-white" href="?page={{ page_obj.paginator.num_pages }}">Ultima</a>
                 </li>
             {% endif %}
         </ul>

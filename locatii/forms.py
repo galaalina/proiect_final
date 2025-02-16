@@ -51,3 +51,13 @@ class RecenzieForm(ModelForm):
         fields = ['scor', 'comentariu']
 
 
+
+from django import forms
+
+class SearchForm(forms.Form):
+    query = forms.CharField(
+        label="Caută locație",
+        max_length=100,
+        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Caută locație...'})
+    )
+
