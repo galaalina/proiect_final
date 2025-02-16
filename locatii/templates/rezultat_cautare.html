@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rezultat cautare</title>
+<style>
+        label {
+            font-style: italic;
+        }
+    </style>
+<body>
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-4">
+    <h4><i>Rezultate pentru: "{{ query }}"</i></h4>
+
+    {% if results %}
+        <ul class="list-group">
+            {% for locatie in results %}
+                <li class="list-group-item">
+                    <a href="{% url 'detalii_locatie' locatie.id %}">{{ locatie.nume }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p class="text-muted">Nu s-au găsit rezultate.</p>
+    {% endif %}
+</div>
+
+</body>
+{% endblock %}
+</html>
+
