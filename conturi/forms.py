@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.db.transaction import atomic
 from django.forms import CharField, TextInput
-from .models import Profile  # Asigură-te că importi modelul Profile
+from .models import Profile
 
 class UserRegisterForm(UserCreationForm):
     telefon = CharField(required=True, widget=TextInput(attrs={'class': 'form-control'}))
@@ -27,7 +27,7 @@ class UserRegisterForm(UserCreationForm):
 
     @atomic
     def save(self, commit=True):
-        # Salvăm obiectul User care provine din Django
+
         user = super().save(commit)
 
         data_telefon = self.cleaned_data['telefon']

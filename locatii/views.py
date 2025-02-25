@@ -28,7 +28,7 @@ def acasa(request):
 
 # afiseaza locatii
 def lista_locatie(request):
-    locatii = Locatie.objects.all()
+    locatii = Locatie.objects.all().order_by('-id')
     paginator = Paginator(locatii, 6)  # 6 iteme per pagină
 
     page_number = request.GET.get('page')  # Obține numărul paginii din URL
@@ -129,7 +129,9 @@ def detalii_tur(request, tur_id):
     locatii = tur.locatii.all()
     recenzii = Recenzie.objects.filter(tur=tur).order_by('-id')[:3]
 
-    user_deja_recenzat = Recenzie.objects.filter(tur=tur, user=request.user).exists()
+    user_deja_recenzat = False
+    if request.user.is_authenticated:
+        user_deja_recenzat = Recenzie.objects.filter(tur=tur, user=request.user).exists()
 
     return render(request, 'detalii_tur.html', {
         'tur': tur,

@@ -5,7 +5,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>HollyMovies</title>
+    <title>GalaTour</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
           integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
@@ -86,16 +86,15 @@
                     <a class="nav-item nav-link active" href="{% url 'contact' %}"><i>Contact</i></a>
                 </div>
             </div>
-            <!-- Bara de căutare în navbar -->
+
     <form class="form-inline my-2 my-lg-0" method="GET" action="{% url 'cautare' %}">
-        <input class="form-control mr-sm-2" type="search" name="query" placeholder="Caută locație..." aria-label="Search">
+        <input class="form-control mr-sm-2 " type="search" name="query" placeholder="Caută locație..." aria-label="Search">
         <button class="btn btn-outline-light my-2 my-sm-0" type="submit"><i>Caută</i></button>
     </form>
 
 <div class="nav-item dropdown">
 
             <div class="nav-item dropdown">
-<!--            # user este o variabila introdusa de Django in toate teplaturile-->
             {% if user.is_authenticated %}
             <a class="nav-link dropdown-toggle text-white" href="#" data-toggle="dropdown">
 
@@ -129,6 +128,7 @@
         <div class="container">
             <div class="jumbotron">
                 {% block content %}{% endblock %}
+
             </div>
         </div>
     </div>
@@ -138,6 +138,7 @@
         <p>&copy;<i> 2025 GalaTour</i></p>
     </footer>
 </div>
+
 </body>
 
 </html>
